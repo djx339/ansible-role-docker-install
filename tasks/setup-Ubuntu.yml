@@ -4,11 +4,6 @@
     docker_deps: "{{ docker_deps + docker_ubuntu1404_deps }}"
   when: ansible_distribution_version == "14.04"
 
-- name: Don't validate certs on Ubuntu 14.04
-  set_fact:
-    docker_validate_certs: no
-  when: ansible_distribution_version == "14.04"
-
 - name: Install dependences
   apt:
     name: "{{ item }}"
@@ -16,10 +11,14 @@
     cache_valid_time: 3600
   with_items: "{{ docker_deps }}"
 
+- name: Download Docker's official GPG key
+  shell: curl -fsSL -o /tmp/docker_gpg https://download.docker.com/linux/ubuntu/gpg
+  args:
+    creates: /tmp/docker_gpg
+
 - name: Add Docker apt key
   apt_key:
-    url: https://download.docker.com/linux/ubuntu/gpg
-    validate_certs: "{{ docker_validate_certs }}"
+    file: /tmp/docker_gpg
     state: present
 
 - name: Add Docker repo
@@ -37,6 +36,7 @@
 - name: Guess the package version string
   shell: "/tmp/pkg_version.sh {{ docker_package }}  {{ docker_version }}"
   register: __docker_pkg_version
+  changed_when: False
 
 - name: Install Docker
   apt:
