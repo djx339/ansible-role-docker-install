@@ -9,6 +9,7 @@ docker_deps:
 docker_ubuntu1404_deps:
   - "linux-image-extra-{{ ansible_kernel }}"
   - linux-image-extra-virtual
+  - gnupg-curl
 
 docker_package: docker-ce
 
