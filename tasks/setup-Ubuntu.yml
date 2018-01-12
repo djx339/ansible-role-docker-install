@@ -1,0 +1,35 @@
+---
+- name: Install dependences
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+    cache_valid_time: 3600
+  with_items: "{{ docker_deps }}"
+
+- name: Add Docker apt key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker repo
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+    update_cache: yes
+    filename: 'docker'
+
+- name: Copy pkg_version.sh to server
+  copy:
+    src: pkg_version.sh
+    dest: /tmp/pkg_version.sh
+    mode: 0755
+
+- name: Guess the package version string
+  shell: "/tmp/pkg_version.sh {{ docker_package }}  {{ docker_version }}"
+  register: __docker_pkg_version
+
+- name: Install Docker
+  apt:
+    name: "{{ docker_package }}"
+    update_cache: yes
+    state: present
+
