@@ -1,1 +1,9 @@
 ---
+docker_deps:
+  - yum-utils
+  - device-mapper-persistent-data
+  - lvm2
+
+docker_package: docker-ce
+
+docker_service: docker

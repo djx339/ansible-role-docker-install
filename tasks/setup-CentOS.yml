@@ -1,0 +1,20 @@
+---
+- name: Install deps
+  yum: "name={{ item }} state=present"
+  with_items: "{{ docker_deps }}"
+
+- name: Install docker-ce repository
+  shell: "yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo"
+  args:
+    creates: /etc/yum.repos.d/docker-ce.repo
+
+- name: Send pkg_version.sh to remote for get the pakcage version string
+  copy: "src=pkg_version.sh dest=/tmp/pkg_version.sh mode=0755"
+
+- name: Guess the package version string
+  shell: "/tmp/pkg_version.sh {{ docker_package }}  {{ docker_version }}"
+  register: __docker_pkg_version
+  changed_when: False
+
+- name: Install docker-ce
+  yum: "name={{ docker_package }}-{{ __docker_pkg_version.stdout }} state=present update_cache=yes"
