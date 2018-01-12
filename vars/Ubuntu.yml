@@ -1,12 +1,14 @@
 ---
 docker_deps:
-  - "linux-image-extra-{{ ansible_kernel }}"
-  - linux-image-extra-virtual
   - apt-transport-https
   - ca-certificates
   - curl
   - software-properties-common
   - python-software-properties
+
+docker_ubuntu1404_deps:
+  - "linux-image-extra-{{ ansible_kernel }}"
+  - linux-image-extra-virtual
 
 docker_package: docker-ce
 

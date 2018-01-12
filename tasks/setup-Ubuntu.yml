@@ -1,4 +1,9 @@
 ---
+- name: Add dependences for Ubuntu 14.04
+  set_facts:
+    docker_deps: "{{ docker_deps + docker_ubuntu1404_deps }}"
+  when: ansible_distribution_version == "14.04"
+
 - name: Install dependences
   apt:
     name: "{{ item }}"
