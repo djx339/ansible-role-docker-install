@@ -3,8 +3,7 @@
 - name: Include OS-specific variables
   include_vars: "{{ ansible_distribution }}.yml"
 
-- include: "setup-{{ ansible_distribution }}.yml"
-  static: no
+- include_tasks: "setup-{{ ansible_distribution }}.yml"
 
 - name: Ensure Docker has started and enabled on boot
   service:
