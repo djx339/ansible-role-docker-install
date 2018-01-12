@@ -1,11 +1,11 @@
 ---
 - name: Add dependences for Ubuntu 14.04
-  set_facts:
+  set_fact:
     docker_deps: "{{ docker_deps + docker_ubuntu1404_deps }}"
   when: ansible_distribution_version == "14.04"
 
 - name: Don't validate certs on Ubuntu 14.04
-  set_facts:
+  set_fact:
     docker_validate_certs: no
   when: ansible_distribution_version == "14.04"
 
