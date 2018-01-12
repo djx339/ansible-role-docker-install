@@ -13,3 +13,5 @@ docker_ubuntu1404_deps:
 docker_package: docker-ce
 
 docker_service: docker
+
+docker_validate_certs: yes
