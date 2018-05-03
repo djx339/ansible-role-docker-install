@@ -1,2 +1,3 @@
 ---
 docker_version: latest
+docker_apt_repo: https://download.docker.com/linux/ubuntu
