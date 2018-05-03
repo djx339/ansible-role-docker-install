@@ -12,6 +12,7 @@ Role Variables
 --------------
 
 `docker_version`: The version of docker. (default: latest)
+`docker_apt_repo`: The repo url for apt based system. (default: https://download.docker.com/linux/ubuntu)
 
 Dependencies
 ------------
