@@ -12,7 +12,7 @@
   with_items: "{{ docker_deps }}"
 
 - name: Download Docker's official GPG key
-  shell: curl -fsSL -o /tmp/docker_gpg https://download.docker.com/linux/ubuntu/gpg
+  shell: curl -fsSLk -o /tmp/docker_gpg https://download.docker.com/linux/ubuntu/gpg
   args:
     creates: /tmp/docker_gpg
 
